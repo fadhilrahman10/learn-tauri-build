@@ -29,3 +29,6 @@ jobs:
 
       - name: Build Tauri app for Windows
         uses: tauri-apps/tauri-action@v0
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: "Release ${{ github.ref_name }}"
