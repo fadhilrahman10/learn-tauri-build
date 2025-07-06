@@ -1,21 +1,31 @@
-name: Build Windows App
+name: Build Tauri App for Windows
 
 on:
   push:
     tags:
-      - 'v*.*.*'  # Trigger saat kamu push tag misal: v1.0.0
+      - 'v*.*.*'
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-      - uses: dtolnay/rust-toolchain@stable
 
-      - run: npm install
-      - run: npm run build
-      - uses: tauri-apps/tauri-action@v0
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build frontend (Svelte)
+        run: npm run build
+
+      - name: Build Tauri app for Windows
+        uses: tauri-apps/tauri-action@v0
